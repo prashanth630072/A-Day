@@ -313,7 +313,73 @@
     .heart-row span:nth-child(2) { animation-delay: 0.3s; }
     .heart-row span:nth-child(3) { animation-delay: 0.6s; }
 
-    /* ── ANIMATIONS ── */
+    /* ── INTRO SCREEN ── */
+    .intro-card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(192,48,106,0.2);
+      border-radius: 24px;
+      padding: 48px 36px;
+      width: min(420px, 90vw);
+      text-align: center;
+      box-shadow: 0 12px 48px rgba(192,48,106,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .intro-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #c0306a, #ff8fab, #c0306a);
+    }
+    .intro-emoji {
+      font-size: 52px;
+      margin-bottom: 16px;
+      animation: bounceIn 0.6s ease;
+    }
+    .intro-title {
+      font-size: clamp(18px, 4vw, 24px);
+      font-weight: 700;
+      color: #c0306a;
+      margin-bottom: 12px;
+    }
+    .intro-sub {
+      font-size: clamp(13px, 2.5vw, 15px);
+      color: #a0507a;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .intro-link {
+      font-size: 14px;
+      color: #c0306a;
+      background: rgba(192,48,106,0.08);
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .intro-btn {
+      padding: 13px 40px;
+      font-size: 16px;
+      background: #c0306a;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(192,48,106,0.3);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .intro-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 8px 24px rgba(192,48,106,0.45);
+    }
+    .intro-step {
+      animation: fadeUp 0.5s ease;
+    }
     @keyframes bounceIn {
       0%   { transform: scale(0.6); opacity: 0; }
       70%  { transform: scale(1.08); opacity: 1; }
@@ -331,8 +397,39 @@
 </head>
 <body>
 
+<!-- ── SCREEN 0: INTRO INSTRUCTIONS ── -->
+<div class="screen active" id="intro-screen">
+  <div class="intro-card">
+    <div class="intro-step" id="step-0">
+      <div class="intro-emoji">💌</div>
+      <div class="intro-title">Hey… I made something for you 😊</div>
+      <div class="intro-sub">But don't rush 😏<br>Follow my steps carefully...</div>
+      <button class="intro-btn" onclick="nextStep()">Okay, I'm ready 🥰</button>
+    </div>
+    <div class="intro-step" id="step-1" style="display:none;">
+      <div class="intro-emoji">🔗</div>
+      <div class="intro-title">Open the link</div>
+      <div class="intro-link">You're already here! 💕</div>
+      <div class="intro-sub">Now let's begin...</div>
+      <button class="intro-btn" onclick="nextStep()">Let's go! 💖</button>
+    </div>
+    <div class="intro-step" id="step-2" style="display:none;">
+      <div class="intro-emoji">🚫</div>
+      <div class="intro-title">Don't click YES immediately!</div>
+      <div class="intro-sub">After clicking <b>1st No</b>, a message will appear 😜<br>Try clicking "No" a few times first...</div>
+      <button class="intro-btn" onclick="nextStep()">Got it 😏</button>
+    </div>
+    <div class="intro-step" id="step-3" style="display:none;">
+      <div class="intro-emoji">✅</div>
+      <div class="intro-title">Okay… now you can click YES ❤️</div>
+      <div class="intro-sub">After the final No... YES will unlock for you 💍</div>
+      <button class="intro-btn" onclick="startPage()">Take me there 💕</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── SCREEN 1: MAIN ASK ── -->
-<div class="screen active" id="ask-screen">
+<div class="screen" id="ask-screen">
   <div class="years-badge">💍 9th Anniversary 💍</div>
   <h1>Hi My Nani 🌸</h1>
   <p class="sub">You are my happiness, my peace, my everything</p>
@@ -376,6 +473,26 @@
 </div>
 
 <script>
+  // ── Intro steps ──
+  let currentStep = 0;
+  function nextStep() {
+    document.getElementById('step-' + currentStep).style.display = 'none';
+    currentStep++;
+    const next = document.getElementById('step-' + currentStep);
+    next.style.display = 'block';
+    next.style.animation = 'none';
+    requestAnimationFrame(() => { next.style.animation = 'fadeUp 0.5s ease'; });
+  }
+  function startPage() {
+    const intro = document.getElementById('intro-screen');
+    intro.style.transition = 'opacity 0.7s ease';
+    intro.style.opacity = '0';
+    setTimeout(() => {
+      intro.classList.remove('active');
+      document.getElementById('ask-screen').classList.add('active');
+    }, 700);
+  }
+
   // ── Floating hearts background ──
   const emojis = ['❤️','💕','💖','💗','🌸','✨'];
   setInterval(() => {
