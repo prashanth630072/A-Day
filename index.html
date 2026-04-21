@@ -6,7 +6,7 @@
   <title>For My Nani 💕</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #ffe0ec, #ffd6f0, #ffecd2);
@@ -104,6 +104,19 @@
       cursor: pointer;
       transition: all 0.15s;
       user-select: none;
+    }
+
+    #yes-btn {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
+    }
+
+    .no-hint {
+      font-size: 13px;
+      color: #b060a0;
+      margin-top: 10px;
+      min-height: 20px;
+      animation: fadeUp 1s ease 1.4s both;
+      font-style: italic;
     }
 
     /* ── FLOATING HEARTS ── */
@@ -283,9 +296,10 @@
   <img class="gif-main" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="love gif" />
   <div class="question">Will you be mine forever? 💕</div>
   <div class="btns">
-    <button id="yes-btn" onclick="goYes()">Yes ❤️</button>
-    <button id="no-btn" onmouseover="runAway(this)" ontouchstart="runAway(this)">No 😜</button>
+    <button id="yes-btn" onclick="goYes()" disabled style="opacity:0.4;cursor:not-allowed;">Yes ❤️</button>
+    <button id="no-btn" onclick="noClick(this)">No 😜</button>
   </div>
+  <div class="no-hint" id="no-hint">Try clicking No first... 😏</div>
 </div>
 
 <!-- ── SCREEN 2: YES ── -->
@@ -334,32 +348,49 @@
     setTimeout(() => h.remove(), 14000);
   }, 700);
 
-  // ── VARIABLES FOR GAME LOGIC ──
-  let noClickCount = 0;
-  let allowYes = false;
+  // ── No button click — grows Yes button, shows funny messages ──
+  let noCount = 0;
+  const noMessages = [
+    "Are you sure? 🥺",
+    "Really sure? 💔",
+    "Think again... 😢",
+    "Last chance! 🙈",
+    "Okay okay... 😭",
+    "Please say yes!! 🥹",
+    "I'll cry 😢😢",
+    "My heart hurts 💔",
+    "Just say YES!! 😩",
+    "Okay fine... just kidding, say YES! 😤"
+  ];
+  const yesSizes = [18, 20, 22, 25, 28, 32, 36, 40, 46, 52];
+  const yesPads  = [14, 15, 16, 18, 20, 22, 24, 26, 28, 30];
 
-  // ── No button behavior ──
-  function runAway(btn) {
-    noClickCount++;
+  function noClick(btn) {
+    if (noCount >= 10) return;
 
-    // Move button
-    btn.style.position = 'fixed';
-    btn.style.zIndex = '1000';
-    const maxX = window.innerWidth - 130;
-    const maxY = window.innerHeight - 60;
-    btn.style.left = (20 + Math.random() * maxX) + 'px';
-    btn.style.top  = (20 + Math.random() * maxY) + 'px';
+    // grow yes button
+    const yesBtn = document.getElementById('yes-btn');
+    yesBtn.style.fontSize = yesSizes[noCount] + 'px';
+    yesBtn.style.padding  = yesPads[noCount] + 'px ' + (yesPads[noCount] * 2.8) + 'px';
 
-    // Increase YES button size
-    const yesBtn = document.getElementById("yes-btn");
-    let scale = 1 + (noClickCount * 0.2);
-    yesBtn.style.transform = `scale(${scale})`;
+    // update hint message
+    document.getElementById('no-hint').textContent = noMessages[noCount];
 
-    // After 4 clicks → allow YES
-    if (noClickCount >= 4) {
-      allowYes = true;
-      btn.innerText = "Now try YES 😏";
+    // shrink No button slightly
+    btn.style.opacity = Math.max(0.2, 1 - noCount * 0.08) + '';
+    btn.style.transform = 'scale(' + Math.max(0.5, 1 - noCount * 0.05) + ')';
+
+    // after 10 clicks, hide No button entirely
+    if (noCount === 9) {
+      btn.style.display = 'none';
+      document.getElementById('no-hint').textContent = "Good choice! Now hit YES! 💖";
+      const yesBtn = document.getElementById('yes-btn');
+      yesBtn.disabled = false;
+      yesBtn.style.opacity = '1';
+      yesBtn.style.cursor = 'pointer';
     }
+
+    noCount++;
   }
 
   // ── Confetti burst ──
@@ -383,23 +414,14 @@
 
   // ── Yes click ──
   function goYes() {
-
-    // Block YES until NO clicked enough times
-    if (!allowYes) {
-      alert("First click NO 😜");
-      return;
-    }
-
-    // ORIGINAL CODE CONTINUES (unchanged)
+    // switch screens
     document.getElementById('ask-screen').style.transition = 'opacity 0.5s';
     document.getElementById('ask-screen').style.opacity = '0';
-
     setTimeout(() => {
       document.getElementById('ask-screen').classList.remove('active');
       document.getElementById('yes-screen').classList.add('active');
       document.getElementById('yes-screen').style.opacity = '0';
       document.getElementById('yes-screen').style.transition = 'opacity 0.6s';
-
       requestAnimationFrame(() => {
         document.getElementById('yes-screen').style.opacity = '1';
       });
@@ -407,26 +429,21 @@
 
     launchConfetti();
 
+    // set date
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const d = new Date();
-    document.getElementById('ldate').textContent =
-      months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    document.getElementById('ldate').textContent = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
 
+    // letter fades in after 2.2s, then paragraphs appear one by one
     setTimeout(() => {
       document.getElementById('letter-wrap').classList.add('show');
       const paras = document.querySelectorAll('.letter-p');
-
       paras.forEach((p, i) => {
         setTimeout(() => p.classList.add('vis'), 400 + i * 520);
       });
-
       const sign = document.querySelector('.letter-sign');
       setTimeout(() => sign.classList.add('vis'), 400 + paras.length * 520 + 350);
-
-      setTimeout(() => {
-        document.getElementById('hrow').classList.add('vis');
-      }, 400 + paras.length * 520 + 900);
-
+      setTimeout(() => document.getElementById('hrow').classList.add('vis'), 400 + paras.length * 520 + 900);
     }, 2200);
   }
 </script>
