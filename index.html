@@ -54,12 +54,60 @@
       animation: fadeUp 1s ease 0.5s both;
     }
 
-    .gif-main {
+    .gif-main, .gif-yes {
       width: min(220px, 60vw);
       border-radius: 16px;
       margin-bottom: 24px;
       animation: fadeUp 1s ease 0.8s both;
+    }
+    .gif-yes {
+      width: min(200px, 55vw);
+      margin-bottom: 16px;
+    }
+
+    .heart-anim {
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      width: 160px; height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       box-shadow: 0 8px 32px rgba(192,48,106,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .h-big {
+      font-size: 56px;
+      animation: bigPulse 1.2s ease-in-out infinite;
+      line-height: 1;
+    }
+    .celebrate .h-big { animation: bigSpin 1.5s ease-in-out infinite; }
+    .h-smalls {
+      display: flex; gap: 6px;
+    }
+    .h-smalls span {
+      font-size: 18px;
+      display: inline-block;
+      animation: smallBounce 1.4s ease-in-out infinite;
+    }
+    .h-smalls span:nth-child(2) { animation-delay: 0.2s; }
+    .h-smalls span:nth-child(3) { animation-delay: 0.4s; }
+    .h-smalls span:nth-child(4) { animation-delay: 0.6s; }
+    .h-smalls span:nth-child(5) { animation-delay: 0.8s; }
+
+    @keyframes bigPulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    @keyframes bigSpin {
+      0%,100% { transform: scale(1) rotate(-8deg); }
+      50% { transform: scale(1.2) rotate(8deg); }
+    }
+    @keyframes smallBounce {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
 
     .question {
@@ -150,12 +198,7 @@
       margin-bottom: 18px;
     }
 
-    .gif-yes {
-      width: min(200px, 55vw);
-      border-radius: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 32px rgba(192,48,106,0.2);
-    }
+
 
     /* confetti */
     .confetti-piece {
@@ -293,7 +336,7 @@
   <div class="years-badge">💍 9th Anniversary 💍</div>
   <h1>Hi My Nani 🌸</h1>
   <p class="sub">You are my happiness, my peace, my everything</p>
-  <img class="gif-main" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="love gif" />
+  <img class="gif-main" id="main-gif" src="https://media0.giphy.com/media/OvpDkvslMuDdw59me5/giphy.gif" alt="bubu dubu gif" />
   <div class="question">Will you be mine forever? 💕</div>
   <div class="btns">
     <button id="yes-btn" onclick="goYes()" disabled style="opacity:0.4;cursor:not-allowed;">Yes ❤️</button>
@@ -306,7 +349,7 @@
 <div class="screen" id="yes-screen">
   <div class="yes-header">Knew you would say yes! 🎉</div>
   <p class="yes-sub">You just made me the happiest person! 💕</p>
-  <img class="gif-yes" src="https://media.tenor.com/eNHbizSfVb0AAAAj/lovemode-cute.gif" alt="celebrating gif" />
+  <img class="gif-yes" src="https://media.giphy.com/media/Kep0eJcSyu126vIlND/giphy.gif" alt="celebrating gif" />
 
   <div id="letter-wrap">
     <div class="letter-card">
@@ -348,25 +391,42 @@
     setTimeout(() => h.remove(), 14000);
   }, 700);
 
-  // ── No button click — grows Yes button, shows funny messages ──
+  // ── No button click — grows Yes button, shows funny messages, changes GIF ──
   let noCount = 0;
   const noMessages = [
     "Are you sure? 🥺",
     "Really sure? 💔",
     "Think again... 😢",
     "Last chance! 🙈",
-    "Okay okay... 😭",
     "Please say yes!! 🥹",
     "I'll cry 😢😢",
     "My heart hurts 💔",
-    "Just say YES!! 😩",
     "Okay fine... just kidding, say YES! 😤"
   ];
-  const yesSizes = [18, 20, 22, 25, 28, 32, 36, 40, 46, 52];
-  const yesPads  = [14, 15, 16, 18, 20, 22, 24, 26, 28, 30];
+  const bubugifs = [
+    "https://media0.giphy.com/media/OvpDkvslMuDdw59me5/giphy.gif",
+    "https://media4.giphy.com/media/8JtRkOk8FWjZsaIN26/giphy.gif",
+    "https://media2.giphy.com/media/jDA7CqG6PNA1sNYCyH/giphy.gif",
+    "https://media2.giphy.com/media/Ek5p6dPYWyJ7J3Wcc5/giphy.gif",
+    "https://media1.giphy.com/media/9CyBtQUH8RXsqeDzyX/200.gif",
+    "https://media0.giphy.com/media/JwEVhaGCR6jTIqfSeI/200.gif",
+    "https://media2.giphy.com/media/fjH72qTrpfapyeF4qO/giphy.gif",
+    "https://media3.giphy.com/media/QO6gybBh0d4LLTNn1d/giphy.gif"
+  ];
+  const yesSizes = [18, 20, 23, 26, 30, 35, 41, 48];
+  const yesPads  = [14, 15, 16, 18, 20, 23, 26, 30];
 
   function noClick(btn) {
-    if (noCount >= 10) return;
+    if (noCount >= 8) return;
+
+    // change main GIF
+    const mainGif = document.getElementById('main-gif');
+    mainGif.style.opacity = '0';
+    mainGif.style.transition = 'opacity 0.3s';
+    setTimeout(() => {
+      mainGif.src = bubugifs[noCount];
+      mainGif.style.opacity = '1';
+    }, 300);
 
     // grow yes button
     const yesBtn = document.getElementById('yes-btn');
@@ -377,14 +437,13 @@
     document.getElementById('no-hint').textContent = noMessages[noCount];
 
     // shrink No button slightly
-    btn.style.opacity = Math.max(0.2, 1 - noCount * 0.08) + '';
-    btn.style.transform = 'scale(' + Math.max(0.5, 1 - noCount * 0.05) + ')';
+    btn.style.opacity = Math.max(0.15, 1 - noCount * 0.12) + '';
+    btn.style.transform = 'scale(' + Math.max(0.45, 1 - noCount * 0.06) + ')';
 
-    // after 10 clicks, hide No button entirely
-    if (noCount === 9) {
-      btn.style.display = 'none';
+    // after 8 clicks, hide No button entirely
+    if (noCount === 7) {
+      setTimeout(() => btn.style.display = 'none', 300);
       document.getElementById('no-hint').textContent = "Good choice! Now hit YES! 💖";
-      const yesBtn = document.getElementById('yes-btn');
       yesBtn.disabled = false;
       yesBtn.style.opacity = '1';
       yesBtn.style.cursor = 'pointer';
