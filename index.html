@@ -394,24 +394,32 @@
   // ── No button click — grows Yes button, shows funny messages, changes GIF ──
   let noCount = 0;
   const noMessages = [
-    "Are you sure? 🥺",
-    "Really sure? 💔",
-    "Think again... 😢",
-    "Last chance! 🙈",
-    "Please say yes!! 🥹",
-    "I'll cry 😢😢",
-    "My heart hurts 💔",
-    "Okay fine... just kidding, say YES! 😤"
+    "Are you sure? 🥺",           // 1 - surprised/questioning
+    "Really sure? 💔",            // 2 - sad, disbelief
+    "Think again... 😢",          // 3 - crying/sad
+    "Last chance! 🙈",            // 4 - hiding/scared
+    "Please say yes!! 🥹",        // 5 - begging/pleading
+    "I'll cry 😢😢",              // 6 - full on crying
+    "My heart hurts 💔",          // 7 - heartbroken
+    "Okay fine... just kidding, say YES! 😤" // 8 - angry/done
   ];
   const bubugifs = [
-    "https://media0.giphy.com/media/OvpDkvslMuDdw59me5/giphy.gif",
-    "https://media4.giphy.com/media/8JtRkOk8FWjZsaIN26/giphy.gif",
-    "https://media2.giphy.com/media/jDA7CqG6PNA1sNYCyH/giphy.gif",
-    "https://media2.giphy.com/media/Ek5p6dPYWyJ7J3Wcc5/giphy.gif",
-    "https://media1.giphy.com/media/9CyBtQUH8RXsqeDzyX/200.gif",
-    "https://media0.giphy.com/media/JwEVhaGCR6jTIqfSeI/200.gif",
-    "https://media2.giphy.com/media/fjH72qTrpfapyeF4qO/giphy.gif",
-    "https://media3.giphy.com/media/QO6gybBh0d4LLTNn1d/giphy.gif"
+    // 1 "Are you sure?" — Dudu shocked/surprised face
+    "https://media.giphy.com/media/iRer7Xi65MTqSLlDpS/giphy.gif",
+    // 2 "Really sure?" — Dudu sad/disbelief
+    "https://media.giphy.com/media/DHKDB8OdEVMkwTX3IQ/giphy.gif",
+    // 3 "Think again..." — Dudu crying sad
+    "https://media.giphy.com/media/yUThmGwfT1hrORu84T/giphy.gif",
+    // 4 "Last chance!" — Dudu scared/hiding
+    "https://media.giphy.com/media/TqZfKTQnCrNCzhUobt/giphy.gif",
+    // 5 "Please say yes!!" — Dudu pleading/begging
+    "https://media.giphy.com/media/iSHOjfxa8tPdDqLRlY/giphy.gif",
+    // 6 "I'll cry" — Dudu sobbing with tears
+    "https://media.giphy.com/media/d6RZ1E5AT6JlZrP4z3/giphy.gif",
+    // 7 "My heart hurts" — Dudu heartbroken
+    "https://media.giphy.com/media/B0bAkodFLhAmMzscfI/200.gif",
+    // 8 "Okay fine... say YES!" — Dudu angry/done
+    "https://media.giphy.com/media/UW2trnVEAftqckaHCI/giphy.gif"
   ];
   const yesSizes = [18, 20, 23, 26, 30, 35, 41, 48];
   const yesPads  = [14, 15, 16, 18, 20, 23, 26, 30];
