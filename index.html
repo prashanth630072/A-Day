@@ -16,7 +16,6 @@
       text-align: center;
     }
 
-    /* ── SCREENS ── */
     .screen {
       display: none;
       flex-direction: column;
@@ -27,7 +26,6 @@
     }
     .screen.active { display: flex; }
 
-    /* ── SCREEN 1: ASK ── */
     .years-badge {
       display: inline-block;
       background: #c0306a;
@@ -65,51 +63,6 @@
       margin-bottom: 16px;
     }
 
-    .heart-anim {
-      background: rgba(255,255,255,0.5);
-      border-radius: 50%;
-      width: 160px; height: 160px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 8px 32px rgba(192,48,106,0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    .h-big {
-      font-size: 56px;
-      animation: bigPulse 1.2s ease-in-out infinite;
-      line-height: 1;
-    }
-    .celebrate .h-big { animation: bigSpin 1.5s ease-in-out infinite; }
-    .h-smalls {
-      display: flex; gap: 6px;
-    }
-    .h-smalls span {
-      font-size: 18px;
-      display: inline-block;
-      animation: smallBounce 1.4s ease-in-out infinite;
-    }
-    .h-smalls span:nth-child(2) { animation-delay: 0.2s; }
-    .h-smalls span:nth-child(3) { animation-delay: 0.4s; }
-    .h-smalls span:nth-child(4) { animation-delay: 0.6s; }
-    .h-smalls span:nth-child(5) { animation-delay: 0.8s; }
-
-    @keyframes bigPulse {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-    @keyframes bigSpin {
-      0%,100% { transform: scale(1) rotate(-8deg); }
-      50% { transform: scale(1.2) rotate(8deg); }
-    }
-    @keyframes smallBounce {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
     .question {
       font-size: clamp(20px, 5vw, 32px);
       font-weight: 700;
@@ -134,10 +87,10 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
       box-shadow: 0 4px 18px rgba(192,48,106,0.35);
     }
-    #yes-btn:hover {
+    #yes-btn:hover:not(:disabled) {
       transform: scale(1.08);
       box-shadow: 0 8px 28px rgba(192,48,106,0.5);
     }
@@ -154,10 +107,6 @@
       user-select: none;
     }
 
-    #yes-btn {
-      transition: transform 0.3s ease, box-shadow 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
-    }
-
     .no-hint {
       font-size: 13px;
       color: #b060a0;
@@ -167,7 +116,6 @@
       font-style: italic;
     }
 
-    /* ── FLOATING HEARTS ── */
     .heart-float {
       position: fixed;
       pointer-events: none;
@@ -182,7 +130,6 @@
       100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
     }
 
-    /* ── SCREEN 2: YES ── */
     #yes-screen { gap: 0; }
 
     .yes-header {
@@ -198,9 +145,6 @@
       margin-bottom: 18px;
     }
 
-
-
-    /* confetti */
     .confetti-piece {
       position: fixed;
       top: -10px;
@@ -214,7 +158,6 @@
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0.2; }
     }
 
-    /* letter */
     #letter-wrap {
       width: min(600px, 100%);
       margin: 24px auto 0;
@@ -313,7 +256,6 @@
     .heart-row span:nth-child(2) { animation-delay: 0.3s; }
     .heart-row span:nth-child(3) { animation-delay: 0.6s; }
 
-    /* ── INTRO SCREEN ── */
     .intro-card {
       background: rgba(255,255,255,0.75);
       backdrop-filter: blur(8px);
@@ -334,33 +276,10 @@
       height: 4px;
       background: linear-gradient(90deg, #c0306a, #ff8fab, #c0306a);
     }
-    .intro-emoji {
-      font-size: 52px;
-      margin-bottom: 16px;
-      animation: bounceIn 0.6s ease;
-    }
-    .intro-title {
-      font-size: clamp(18px, 4vw, 24px);
-      font-weight: 700;
-      color: #c0306a;
-      margin-bottom: 12px;
-    }
-    .intro-sub {
-      font-size: clamp(13px, 2.5vw, 15px);
-      color: #a0507a;
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-    .intro-link {
-      font-size: 14px;
-      color: #c0306a;
-      background: rgba(192,48,106,0.08);
-      border-radius: 10px;
-      padding: 10px 16px;
-      margin-bottom: 12px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
+    .intro-emoji { font-size: 52px; margin-bottom: 16px; animation: bounceIn 0.6s ease; }
+    .intro-title { font-size: clamp(18px, 4vw, 24px); font-weight: 700; color: #c0306a; margin-bottom: 12px; }
+    .intro-sub { font-size: clamp(13px, 2.5vw, 15px); color: #a0507a; line-height: 1.7; margin-bottom: 28px; }
+    .intro-link { font-size: 14px; color: #c0306a; background: rgba(192,48,106,0.08); border-radius: 10px; padding: 10px 16px; margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px; }
     .intro-btn {
       padding: 13px 40px;
       font-size: 16px;
@@ -373,13 +292,9 @@
       box-shadow: 0 4px 16px rgba(192,48,106,0.3);
       font-family: 'Segoe UI', sans-serif;
     }
-    .intro-btn:hover {
-      transform: scale(1.06);
-      box-shadow: 0 8px 24px rgba(192,48,106,0.45);
-    }
-    .intro-step {
-      animation: fadeUp 0.5s ease;
-    }
+    .intro-btn:hover { transform: scale(1.06); box-shadow: 0 8px 24px rgba(192,48,106,0.45); }
+    .intro-step { animation: fadeUp 0.5s ease; }
+
     @keyframes bounceIn {
       0%   { transform: scale(0.6); opacity: 0; }
       70%  { transform: scale(1.08); opacity: 1; }
@@ -397,12 +312,12 @@
 </head>
 <body>
 
-<!-- ── SCREEN 0: INTRO INSTRUCTIONS ── -->
+<!-- SCREEN 0: INTRO -->
 <div class="screen active" id="intro-screen">
   <div class="intro-card">
     <div class="intro-step" id="step-0">
       <div class="intro-emoji">💌</div>
-      <div class="intro-title">Hey… I made something for you 😊</div>
+      <div class="intro-title">Hey Nani💖 I made something for you 😊</div>
       <div class="intro-sub">But don't rush 😏<br>Follow my steps carefully...</div>
       <button class="intro-btn" onclick="nextStep()">Okay, I'm ready 🥰</button>
     </div>
@@ -421,14 +336,14 @@
     </div>
     <div class="intro-step" id="step-3" style="display:none;">
       <div class="intro-emoji">✅</div>
-      <div class="intro-title">Okay… now you can click YES ❤️</div>
+      <div class="intro-title">Love You Nani ❤️</div>
       <div class="intro-sub">After the final No... YES will unlock for you 💍</div>
       <button class="intro-btn" onclick="startPage()">Take me there 💕</button>
     </div>
   </div>
 </div>
 
-<!-- ── SCREEN 1: MAIN ASK ── -->
+<!-- SCREEN 1: MAIN ASK -->
 <div class="screen" id="ask-screen">
   <div class="years-badge">💍 9th Anniversary 💍</div>
   <h1>Hi My Nani 🌸</h1>
@@ -442,30 +357,28 @@
   <div class="no-hint" id="no-hint">Try clicking No first... 😏</div>
 </div>
 
-<!-- ── SCREEN 2: YES ── -->
+<!-- SCREEN 2: YES -->
 <div class="screen" id="yes-screen">
   <div class="yes-header">Knew you would say yes! 🎉</div>
   <p class="yes-sub">You just made me the happiest person! 💕</p>
-  <img class="gif-yes" src="https://media1.tenor.com/m/d4ZTG0tdzAIAAAAd/bubu-dudu-dudu.gif" alt="celebrating gif" />
+  <!-- Fixed: using a reliable Giphy URL for the celebration hug gif -->
+  <img class="gif-yes" id="celebrate-gif" src="https://media.giphy.com/media/l4FGGafcOHmrlQxG0/giphy.gif" alt="celebrating hug gif" />
 
   <div id="letter-wrap">
     <div class="letter-card">
       <div class="letter-date" id="ldate"></div>
       <div class="letter-hi">My dearest Nani,</div>
-
       <div class="letter-p">Nine years ago, something quietly extraordinary began — and every single day since has been proof that the universe knew exactly what it was doing when it brought you into my life.</div>
       <div class="letter-p">You are the calm in every storm, the warmth in every cold morning, the reason a simple Tuesday can feel like the most beautiful day. I have watched you love deeply, laugh freely, and carry your heart with a grace that still takes my breath away.</div>
       <div class="letter-p">In nine years, I have learned what it truly means to have someone — not just beside you, but woven into who you are. You are not just a part of my life, Nani. You are the best part of it.</div>
       <div class="letter-p">I think about the little things most — the way you smile when you think nobody is looking, the sound of your voice when you say my name, the way everything feels softer and more possible when you are near. These are the things I carry with me everywhere.</div>
       <div class="letter-p">So today, on our ninth anniversary, I want you to know — not with grand gestures or borrowed words, but with everything I am — that I choose you. Again. Always. Without hesitation, without condition, without end.</div>
       <div class="letter-p special">Here is to nine years of us... and to every beautiful year still to come. 💍</div>
-
       <div class="letter-sign">
         <span class="with-love">Forever yours,</span>
         <span class="sig">Your Love</span>
       </div>
     </div>
-
     <div class="heart-row" id="hrow">
       <span>💖</span><span>💕</span><span>💗</span>
     </div>
@@ -473,7 +386,6 @@
 </div>
 
 <script>
-  // ── Intro steps ──
   let currentStep = 0;
   function nextStep() {
     document.getElementById('step-' + currentStep).style.display = 'none';
@@ -493,7 +405,6 @@
     }, 700);
   }
 
-  // ── Floating hearts background ──
   const emojis = ['❤️','💕','💖','💗','🌸','✨'];
   setInterval(() => {
     const h = document.createElement('div');
@@ -508,34 +419,25 @@
     setTimeout(() => h.remove(), 14000);
   }, 700);
 
-  // ── No button click — grows Yes button, shows funny messages, changes GIF ──
   let noCount = 0;
   const noMessages = [
-    "Are you sure? 🥺",           // 1 - surprised/questioning
-    "Really sure? 💔",            // 2 - sad, disbelief
-    "Think again... 😢",          // 3 - crying/sad
-    "Last chance! 🙈",            // 4 - hiding/scared
-    "Please say yes!! 🥹",        // 5 - begging/pleading
-    "I'll cry 😢😢",              // 6 - full on crying
-    "My heart hurts 💔",          // 7 - heartbroken
-    "Okay fine... just kidding, say YES! 😤" // 8 - angry/done
+    "Are you sure? 🥺",
+    "Really sure? 💔",
+    "Think again... 😢",
+    "Last chance! 🙈",
+    "Please say yes!! 🥹",
+    "I'll cry 😢😢",
+    "My heart hurts 💔",
+    "Okay fine... just kidding, say YES! 😤"
   ];
   const bubugifs = [
-    // 1 "Are you sure?" — Dudu shocked/surprised
     "https://media1.tenor.com/m/n13EAU1jklAAAAAd/dudu-shocked.gif",
-    // 2 "Really sure?" — Dudu sad, peeking over wall "miss you"
     "https://media1.tenor.com/m/y5aTR7z4PbUAAAAd/bubu-dudu-dudu-sad.gif",
-    // 3 "Think again..." — Dudu crying sitting on rug
     "https://media1.tenor.com/m/8RvB4apm9LgAAAAd/dudu-crying-sad.gif",
-    // 4 "Last chance!" — Dudu crying on floor (hay nako)
     "https://media1.tenor.com/m/JbT4JqfvxyEAAAAd/dudu-cry-hay-nako-reika.gif",
-    // 5 "Please say yes!!" — Dudu sad holding ball/crying
     "https://media.tenor.com/BOLqQTbf9QgAAAAj/dudu-sad.gif",
-    // 6 "I'll cry" — Dudu crying with tears (bubu-dudu-crying)
     "https://media.tenor.com/3OJLuggNiuUAAAAM/bubu-dudu-crying.gif",
-    // 7 "My heart hurts" — Dudu & Bubu hugging with hearts
     "https://media1.tenor.com/m/kOfhJ6VeBIsAAAAd/dudu-bubu.gif",
-    // 8 "Okay fine... say YES!" — Dudu missing Bubu (sad done)
     "https://media.tenor.com/oZR1mn0UOt8AAAAM/dudu-sad.gif"
   ];
   const yesSizes = [18, 20, 23, 26, 30, 35, 41, 48];
@@ -543,41 +445,30 @@
 
   function noClick(btn) {
     if (noCount >= 8) return;
-
-    // change main GIF
+    const currentCount = noCount;
     const mainGif = document.getElementById('main-gif');
     mainGif.style.opacity = '0';
     mainGif.style.transition = 'opacity 0.3s';
     setTimeout(() => {
-      mainGif.src = bubugifs[noCount];
+      mainGif.src = bubugifs[currentCount];
       mainGif.style.opacity = '1';
     }, 300);
-
-    // grow yes button
     const yesBtn = document.getElementById('yes-btn');
     yesBtn.style.fontSize = yesSizes[noCount] + 'px';
     yesBtn.style.padding  = yesPads[noCount] + 'px ' + (yesPads[noCount] * 2.8) + 'px';
-
-    // update hint message
     document.getElementById('no-hint').textContent = noMessages[noCount];
-
-    // shrink No button slightly
     btn.style.opacity = Math.max(0.15, 1 - noCount * 0.12) + '';
     btn.style.transform = 'scale(' + Math.max(0.45, 1 - noCount * 0.06) + ')';
-
-    // after 8 clicks, hide No button entirely
     if (noCount === 7) {
       setTimeout(() => btn.style.display = 'none', 300);
-      document.getElementById('no-hint').textContent = "Good choice! Now hit YES! 💖";
+      document.getElementById('no-hint').textContent = "There’s no option to say NO anymore… just say YES! 💖";
       yesBtn.disabled = false;
       yesBtn.style.opacity = '1';
       yesBtn.style.cursor = 'pointer';
     }
-
     noCount++;
   }
 
-  // ── Confetti burst ──
   function launchConfetti() {
     const colors = ['#c0306a','#ff8fab','#ffb3c6','#ffd6e0','#ff4d94','#ff85a1','#ffe4ec','#ffccd5','#ffc0cb','#ff69b4'];
     for (let i = 0; i < 90; i++) {
@@ -596,29 +487,24 @@
     }
   }
 
-  // ── Yes click ──
   function goYes() {
-    // switch screens
     document.getElementById('ask-screen').style.transition = 'opacity 0.5s';
     document.getElementById('ask-screen').style.opacity = '0';
     setTimeout(() => {
       document.getElementById('ask-screen').classList.remove('active');
-      document.getElementById('yes-screen').classList.add('active');
-      document.getElementById('yes-screen').style.opacity = '0';
-      document.getElementById('yes-screen').style.transition = 'opacity 0.6s';
-      requestAnimationFrame(() => {
-        document.getElementById('yes-screen').style.opacity = '1';
-      });
+      const ys = document.getElementById('yes-screen');
+      ys.classList.add('active');
+      ys.style.opacity = '0';
+      ys.style.transition = 'opacity 0.6s';
+      requestAnimationFrame(() => { ys.style.opacity = '1'; });
     }, 500);
 
     launchConfetti();
 
-    // set date
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const d = new Date();
     document.getElementById('ldate').textContent = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
 
-    // letter fades in after 2.2s, then paragraphs appear one by one
     setTimeout(() => {
       document.getElementById('letter-wrap').classList.add('show');
       const paras = document.querySelectorAll('.letter-p');
